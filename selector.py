@@ -7,15 +7,15 @@ import random
 
 class Selector:
 	def __init__(self):
-		self.prob = -1
+		self.quiz = -1
 		self.money_list = []	
 
-	def __total_money(self, prob):
-		mod = (prob % 100) + 1
+	def __total_money(self, quiz):
+		mod = (quiz % 100) + 1
 		return (mod * setting.RATE)
 
-	def __new_prob_num(self):
-		return random.randint(1, setting.MAX_PROBLEM_NUM)
+	def __new_quiz_num(self):
+		return random.randint(1, setting.MAX_QUIZ_NUM)
 
 	def __rate_list(self):
 		half = setting.MEMBER / 2
@@ -31,6 +31,7 @@ class Selector:
 		return pos_list + neg_list
 
 	def shuffle(self):
-		self.prob = self.__new_prob_num()
-		self.money_list = map( (lambda x: x * self.__total_money(self.prob)), self.__rate_list() )
+		self.quiz = self.__new_quiz_num()
+		self.total_money = self.__total_money(self.quiz)
+		self.money_list = map( (lambda x: x * self.total_money), self.__rate_list() )
 		self.money_list = map( (lambda x: int(x)), self.money_list )
